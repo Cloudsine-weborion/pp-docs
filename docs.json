@@ -1,0 +1,133 @@
+{
+  "$schema": "https://mintlify.com/docs.json",
+  "theme": "mint",
+  "name": "GenAI Protector Plus",
+  "description": "Runtime AI security for GenAI and agentic AI workloads — official documentation, deployment guides, and API reference for CloudsineAI's GenAI Protector Plus.",
+  "colors": {
+    "primary": "#1F3864",
+    "light": "#00B5E2",
+    "dark": "#0F1E3A"
+  },
+  "favicon": "/logo/favicon.png",
+  "logo": {
+    "light": "/logo/light.png",
+    "dark": "/logo/dark.png",
+    "href": "https://www.cloudsine.tech"
+  },
+  "fonts": {
+    "family": "Inter"
+  },
+  "appearance": {
+    "default": "system"
+  },
+  "background": {
+    "decoration": "gradient"
+  },
+  "navbar": {
+    "links": [
+      {
+        "label": "Website",
+        "href": "https://www.cloudsine.tech"
+      },
+      {
+        "label": "AWS Marketplace",
+        "href": "https://aws.amazon.com/marketplace/pp/prodview-wwb66ysepn4he"
+      }
+    ],
+    "primary": {
+      "type": "button",
+      "label": "Get an API Key",
+      "href": "https://www.cloudsine.tech/contact"
+    }
+  },
+  "footer": {
+    "socials": {
+      "linkedin": "https://www.linkedin.com/company/cloudsineai",
+      "website": "https://www.cloudsine.tech"
+    }
+  },
+  "navigation": {
+    "tabs": [
+      {
+        "tab": "Documentation",
+        "groups": [
+          {
+            "group": "Get Started",
+            "pages": [
+              "introduction/overview",
+              "introduction/key-concepts",
+              "introduction/quickstart"
+            ]
+          },
+          {
+            "group": "Architecture",
+            "pages": [
+              "architecture/system-overview",
+              "architecture/deployment-modes",
+              "architecture/detection-layers",
+              "architecture/shieldprompt",
+              "architecture/threat-vector-database"
+            ]
+          },
+          {
+            "group": "Deployment",
+            "pages": [
+              "deployment/aws-marketplace",
+              "deployment/kubernetes-helm",
+              "deployment/on-premises",
+              "deployment/network-prerequisites"
+            ]
+          },
+          {
+            "group": "User Guide",
+            "pages": [
+              "user-guide/initial-setup",
+              "user-guide/security-profiles",
+              "user-guide/guardrails",
+              "user-guide/protection-levels",
+              "user-guide/threat-management",
+              "user-guide/account-management",
+              "user-guide/siem-integration"
+            ]
+          },
+          {
+            "group": "Benchmarks",
+            "pages": [
+              "benchmarks/accuracy",
+              "benchmarks/performance",
+              "benchmarks/uat-methodology"
+            ]
+          }
+        ]
+      },
+      {
+        "tab": "API Reference",
+        "groups": [
+          {
+            "group": "Introduction",
+            "pages": [
+              "api-reference/introduction",
+              "api-reference/authentication",
+              "api-reference/integration-pattern"
+            ]
+          },
+          {
+            "group": "Endpoints",
+            "pages": [
+              "api-reference/input-check",
+              "api-reference/output-check",
+              "api-reference/health"
+            ]
+          },
+          {
+            "group": "Guardrails",
+            "pages": [
+              "api-reference/guardrails-reference",
+              "api-reference/test-prompts"
+            ]
+          }
+        ]
+      }
+    ]
+  }
+}

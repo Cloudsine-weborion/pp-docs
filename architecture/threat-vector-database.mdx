@@ -1,0 +1,42 @@
+---
+title: "Threat Vector Database"
+description: "CloudsineAI's proprietary corpus of LLM attack patterns, maintained continuously by the CloudsineAI research operation."
+icon: "database"
+---
+
+The **Threat Vector Database (TVDB)** is CloudsineAI's proprietary corpus of LLM attack patterns. It powers the Vector Filter layer of [ShieldPrompt](/architecture/shieldprompt).
+
+## What the TVDB contains
+
+- Curated prompt-injection patterns across direct and indirect injection classes.
+- Known jailbreak templates and their semantic variants.
+- Singapore-context attack patterns observed in CloudsineAI customer telemetry (with explicit customer consent).
+
+## How the TVDB is maintained
+
+CloudsineAI's research operation maintains the TVDB on a continuous basis. Emerging attack patterns are surfaced from public-domain disclosures, customer telemetry (consented), and CloudsineAI's internal research programme, then validated against current Protector Plus detection layers before incorporation.
+
+<Frame caption="TVDB feedback loop — prompts and adversarial patterns flow into the threat database; live users gain protection against the latest threats.">
+  <img src="/images/diag-tvdb-loop.png" alt="TVDB feedback loop" />
+</Frame>
+
+## Cadence
+
+The TVDB updates continuously, with accelerated releases for high-impact disclosures.
+
+## Domain edge
+
+Two layered moats explain why competitors cannot easily replicate the TVDB's position.
+
+<AccordionGroup>
+  <Accordion title="Research operation scale" icon="robot">
+    The TVDB is maintained at a cadence that requires both AI-security depth and red-team engineering capacity — a rare combination.
+  </Accordion>
+  <Accordion title="SEA sectoral coverage" icon="globe">
+    CloudsineAI's deployment depth in Singapore Government and SEA regulated enterprise gives the TVDB a sectoral profile that US- and EU-anchored vendors do not currently service.
+  </Accordion>
+</AccordionGroup>
+
+## On-prem & air-gapped delivery
+
+In air-gapped deployments, TVDB updates are delivered as **signed bundles** through the customer's out-of-band update channel. The management console verifies and imports the bundle into the local vector store and makes it available to the Vector Filter without service interruption.

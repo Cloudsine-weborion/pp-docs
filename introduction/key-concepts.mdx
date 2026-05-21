@@ -1,0 +1,59 @@
+---
+title: "Key Concepts"
+description: "The building blocks of Protector Plus — guardrails, ShieldPrompt, security profiles, and the TVDB."
+icon: "book-open"
+---
+
+## The detection stack
+
+Protector Plus combines two complementary layers in defence-in-depth: deterministic Standard Guardrails for known patterns, and ShieldPrompt for model-driven detection.
+
+<Steps>
+  <Step title="Standard Guardrails (rule-based, CPU-powered)">
+    Deterministic detection for well-known risk vectors: **Keyword Blocklist**, **Regex Pattern Matching**, and **PII Detection** (NER-based) for inputs and outputs.
+  </Step>
+  <Step title="ShieldPrompt (GPU-powered, defence-in-depth)">
+    The orchestration pipeline combining four model-based layers:
+
+    - **LLM Classifier** — an LLM-as-judge model that scores prompt-injection likelihood
+    - **Vector Filter** — semantic similarity against the **Threat Vector Database (TVDB)**
+    - **Content Moderation** — purpose-built classifier for hazardous content
+    - **System Prompt Protection** — detection of system-prompt leakage in LLM responses
+  </Step>
+</Steps>
+
+## Security profiles
+
+A **security profile** is a packaged set of policy configurations. Each GenAI application is bound to a security profile, which determines which guardrails are enabled, in what mode (block or monitor), and with what thresholds.
+
+<Tip>
+  Start at **Protection Level 3** (Standard Protection + ShieldPrompt Preset 2). It enables the LLM, Vector, Content Moderation, and System Prompt Protection guardrails by default. Tune from there.
+</Tip>
+
+## Deployment modes
+
+Protector Plus supports topologies that place either an LLM gateway or the GenAI Firewall as the first hop from the application.
+
+| Mode | First hop | Enforcement | When to use |
+| --- | --- | --- | --- |
+| **Gateway-first** | LLM gateway | Non-blocking | Rapid adoption; low app-side change. App interprets findings. |
+| **Forwarding** | GenAI Firewall | Blocking | Production with strict policy enforcement. |
+| **Non-forwarding** | GenAI Firewall | App-decides | App retains final allow/deny authority. |
+
+See [Deployment Modes](/architecture/deployment-modes) for the full flow diagrams.
+
+## The Threat Vector Database (TVDB)
+
+The TVDB is CloudsineAI's proprietary corpus of LLM attack patterns. It powers the Vector Filter layer of ShieldPrompt.
+
+The TVDB is maintained on a continuous basis by CloudsineAI's research operation, with accelerated releases for high-impact disclosures. Read more in [Threat Vector Database](/architecture/threat-vector-database).
+
+## Glossary
+
+| Term | Meaning |
+| --- | --- |
+| **GenAI Firewall** | The Protector Plus runtime inspection service. |
+| **ShieldPrompt** | The defence-in-depth orchestration pipeline (LLM + Vector + Content Moderation + System-Prompt Protection). |
+| **TVDB** | Threat Vector Database — CloudsineAI's proprietary attack-pattern corpus. |
+| **Security profile** | A packaged guardrail configuration bound to a GenAI application. |
+| **Protection level** | A templated guardrail preset (Level 0–3 or Full Custom). |

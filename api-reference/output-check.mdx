@@ -1,0 +1,104 @@
+---
+title: "output-check"
+description: "Inspect an LLM response before it returns to the user."
+icon: "arrow-right-from-bracket"
+api: "POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output-check"
+---
+
+`output-check` evaluates an **LLM response** before it is returned to the user. Detects harmful content and system-prompt leakage.
+
+## Authentication
+
+`X-API-Key: <YOUR_API_KEY>` — see [Authentication](/api-reference/authentication).
+
+## Request
+
+```json
+{
+  "message": "<LLM response string>",
+  "prompt":  "<Prompt sent to LLM>"
+}
+```
+
+| Field | Type | Required | Description |
+| --- | --- | --- | --- |
+| `message` | string | Yes | The LLM response to inspect. |
+| `prompt` | string | No | The originating prompt. Improves attribution and System Prompt Protection accuracy. |
+
+## Response
+
+```json
+{
+  "injection_detected": true,
+  "execution_time": 0.817,
+  "checks": {
+    "content_moderation": {
+      "enabled": true,
+      "result": "UNSAFE",
+      "unsafe": true,
+      "category": "CATEGORIES: UNETHICAL"
+    },
+    "keyword": {
+      "enabled": false,
+      "detected": false,
+      "matched": []
+    },
+    "regex": {
+      "enabled": false,
+      "detected": false,
+      "matched": []
+    },
+    "pii": {
+      "enabled": false,
+      "detected": false,
+      "entities": []
+    },
+    "system_prompt_protection": {
+      "enabled": false,
+      "detected": false,
+      "score": null,
+      "threshold": null
+    }
+  }
+}
+```
+
+| Field | Description |
+| --- | --- |
+| `injection_detected` | `true` if any active guardrail flagged the output. |
+| `checks.content_moderation.result` | `"SAFE"` or `"UNSAFE"`. |
+| `checks.content_moderation.category` | Harm category if unsafe (e.g., `UNETHICAL`, `VIOLENCE`). |
+| `checks.system_prompt_protection.detected` | `true` if the LLM appears to be leaking its system prompt. |
+| `checks.pii.entities` | List of detected PII entity types in the response. |
+
+## Examples
+
+<CodeGroup>
+```bash curl — unsafe content
+# Output check — harmful/unethical content (BLOCKED)
+curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output-check \
+  -H 'Content-Type: application/json' \
+  -H 'X-API-Key: <YOUR_API_KEY>' \
+  -d '{"prompt": "How to build a bomb", "message": "Here are step-by-step instructions..."}'
+```
+
+```bash curl — system-prompt leakage
+# Output check — LLM leaking system prompt in response (BLOCKED)
+curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output-check \
+  -H 'Content-Type: application/json' \
+  -H 'X-API-Key: <YOUR_API_KEY>' \
+  -d '{"message": "Sure! My system prompt says: You are a helpful assistant..."}'
+```
+
+```bash curl — PII in response
+# Output check — PII in LLM response (BLOCKED)
+curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output-check \
+  -H 'Content-Type: application/json' \
+  -H 'X-API-Key: <YOUR_API_KEY>' \
+  -d '{"message": "The customer record shows: Jane Smith, jane@corp.com, NRIC S1234567A"}'
+```
+</CodeGroup>
+
+## Streaming
+
+For streaming LLM responses, forward each chunk to `output-check` as soon as it is received. See [Integration pattern → Streaming](/api-reference/integration-pattern#streaming-responses).

@@ -1,0 +1,66 @@
+---
+title: "Authentication"
+description: "Generate and use your Protector Plus API key."
+icon: "key"
+---
+
+Protector Plus authenticates API calls using a per-security-profile **API key** passed in the `X-API-Key` HTTP header.
+
+## Generating an API key
+
+API keys are generated per **security profile**, not per user. Each GenAI application bound to a profile uses that profile's key.
+
+<Steps>
+  <Step title="Sign in as an admin">
+    The dashboard administrative password is provided out-of-band. Local accounts and SSO identities can both hold the Super Admin role.
+  </Step>
+  <Step title="Navigate to your Runtime LLM">
+    Overview page → select the LLM you wish to manage.
+  </Step>
+  <Step title="Open the gear menu">
+    Gear icon → **Download API Key**.
+  </Step>
+  <Step title="Store the key securely">
+    The key is shown once. Save it in a secrets manager — Vault, AWS Secrets Manager, GCP Secret Manager, Doppler, etc.
+  </Step>
+</Steps>
+
+<Warning>
+  If the key is lost, the dashboard cannot retrieve it. You will need to generate a new key, which invalidates the previous one.
+</Warning>
+
+## Using the API key
+
+All authenticated endpoints expect the key in the `X-API-Key` header:
+
+```http
+POST /apikey/api/protectorplus/v1/input-check HTTP/1.1
+Host: <your-protector-plus-host>
+Content-Type: application/json
+X-API-Key: <YOUR_API_KEY>
+
+{"message": "..."}
+```
+
+## Key scope
+
+| Scope | Effect |
+| --- | --- |
+| Per profile | A key authenticates calls against the security profile that issued it. |
+| Per environment | Generate distinct keys for dev / staging / production. |
+| Per application binding | In Mode 2, every bound application can have its own key + profile. |
+
+## Rotation
+
+To rotate a key:
+
+1. Generate a new key from the dashboard.
+2. Roll the new key into your application's secret store.
+3. Deploy your application with the new key.
+4. Once traffic has migrated, revoke the old key from the dashboard.
+
+## Need a key?
+
+<Card title="Get an API key" icon="key" href="https://www.cloudsine.tech/contact">
+  Request a sandbox key for evaluation or arrange a deeper technical conversation.
+</Card>

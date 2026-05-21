@@ -1,0 +1,49 @@
+---
+title: "On-Premises & Air-Gapped"
+description: "Sovereign and air-gapped deployment as a first-class mode."
+icon: "lock"
+---
+
+Protector Plus supports on-prem and air-gapped deployment as a first-class mode. CloudsineAI runs production on-prem engagements in Singapore Government environments.
+
+## Deployment topologies
+
+<CardGroup cols={2}>
+  <Card title="On-prem (sovereign)" icon="building-shield">
+    Air-gapped or restricted-network deployments. Data and detection stay on customer infrastructure.
+  </Card>
+  <Card title="Hybrid" icon="cloud-arrow-up">
+    Control-plane SaaS plus data-plane on-prem for organisations with sovereign-data requirements.
+  </Card>
+</CardGroup>
+
+## Form factor
+
+On-prem deployments use the same Kubernetes/Helm packaging documented in [Kubernetes / Helm](/deployment/kubernetes-helm). Customer-managed Kubernetes is required; CloudsineAI does not require persistent outbound connectivity.
+
+## TVDB updates in air-gapped environments
+
+Air-gapped deployments receive TVDB updates as **signed bundles** delivered through the customer's out-of-band update channel.
+
+<Steps>
+  <Step title="Bundle delivery">
+    CloudsineAI publishes a signed update bundle on the agreed schedule.
+  </Step>
+  <Step title="Import via the management console">
+    The bundle is transferred into the air-gapped environment and imported through the dashboard's controlled import workflow.
+  </Step>
+  <Step title="Verification & indexing">
+    The console verifies the bundle signature and indexes it into the local vector store.
+  </Step>
+  <Step title="No service interruption">
+    The update completes without restarting the inspection services.
+  </Step>
+</Steps>
+
+## Edge cadence
+
+Air-gapped deployments receive updates on the same cadence as cloud deployments, subject to the customer's acceptance window. The CloudsineAI research operation runs centrally; only the validated, indexed corpus is delivered to the edge.
+
+## Telemetry
+
+Detection events, dashboard access events, and operational telemetry are emitted via SYSLOG-over-UDP to the customer's SIEM. Standard syslog forwarding components handle the egress plane. Air-gapped deployments may retain telemetry locally and export audit logs to CSV through the dashboard.

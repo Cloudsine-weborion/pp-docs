@@ -1,0 +1,36 @@
+---
+title: "Accuracy"
+description: "Latest accuracy benchmarks for Protector Plus across PII, prompt injection, system-prompt protection, and unsafe content."
+icon: "bullseye"
+---
+
+The latest accuracy benchmark cycle was run on the CloudsineAI internal evaluation harness against published attack datasets and CloudsineAI's internal evaluation corpora.
+
+## Headline results
+
+| Test type | Status | Accuracy |
+| --- | --- | --- |
+| Sensitive data — PII detection | ✅ Pass | **100%** |
+| Sensitive data — System prompt protection | ✅ Pass | **91%** |
+| Prompt injection | ✅ Pass | **93%** |
+| Unsafe-content detection | ✅ Pass | **92%** |
+
+## PII detection
+
+Singapore-localised PII evaluation corpus derived from a publicly-available balanced PII benchmark. PII guardrail enabled for SG NRIC/FIN, Phone Number, Person, Email Address, Credit Card.
+
+## System prompt protection
+
+System Prompt Protection guardrail enabled with default settings. 91% accuracy on CloudsineAI's internal system-prompt-leakage evaluation corpus.
+
+## Prompt injection
+
+CloudsineAI's internal evaluation harness against a well-known public prompt-injection benchmark. The headline number reflects the LLM classifier combined with the TVDB Vector filter at medium sensitivity. Per-configuration breakdown available on request.
+
+## Unsafe-content detection
+
+Content Moderation guardrail enabled with standard malicious-input recommended settings. 92% accuracy across the standard hazardous-content categories.
+
+## Methodology
+
+Tests are executed through the CloudsineAI evaluation harness against the latest production iteration of Protector Plus on the recommended hardware specification (`g6e.2xlarge`). Underlying per-run CSV exports are retained for audit and are available to evaluators on request via the [contact form](https://www.cloudsine.tech/contact).

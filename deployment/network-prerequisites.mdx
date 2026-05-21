@@ -1,0 +1,27 @@
+---
+title: "Network Prerequisites"
+description: "Ports, protocols, and DNS for a Protector Plus deployment."
+icon: "network-wired"
+---
+
+## Ports
+
+| Service | TCP port | Purpose |
+| --- | --- | --- |
+| SSH | 22 | Vendor maintenance access. Restrict source CIDR. |
+| HTTPS | 443 | Prompt inspection and administrative dashboard. |
+
+## DNS — Forwarding mode
+
+Forwarding mode requires each GenAI application to be assigned a **unique FQDN** that resolves to the Protector Plus instance (AMI) or Ingress (Kubernetes). The FQDN is the application identifier — Protector Plus applies the bound security profile based on the FQDN of the incoming request.
+
+Example assignment:
+
+| FQDN | Protector Plus action | Origin |
+| --- | --- | --- |
+| `app1.protect.example.com` | Apply Security Profile 1 | LLM endpoint for App 1 |
+| `app2.protect.example.com` | Apply Security Profile 2 | LLM endpoint for App 2 |
+
+## DNS — Non-forwarding mode
+
+Non-forwarding mode does **not** require an FQDN. The application calls the Protector Plus API directly with an API key. The Runtime LLM URL is a pseudo-URL (e.g., `app1.pseudo.local`) used internally for binding, not a resolvable DNS name.

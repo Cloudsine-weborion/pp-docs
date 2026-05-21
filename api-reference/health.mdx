@@ -1,0 +1,26 @@
+---
+title: "health"
+description: "Unauthenticated liveness probe."
+icon: "heart-pulse"
+api: "GET https://<your-protector-plus-host>/api/protectorplus/v1/health"
+---
+
+`health` is an unauthenticated liveness probe suitable for load-balancer health checks and uptime monitoring.
+
+## Authentication
+
+None.
+
+## Request
+
+```bash
+curl https://<your-protector-plus-host>/api/protectorplus/v1/health
+```
+
+## Response
+
+`200 OK` with a small JSON body indicating service readiness. Non-`2xx` responses indicate the inspection service is unavailable.
+
+<Tip>
+  Use this endpoint as your load-balancer target group health check and as a Kubernetes liveness/readiness probe.
+</Tip>

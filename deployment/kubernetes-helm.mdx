@@ -1,0 +1,34 @@
+---
+title: "Kubernetes / Helm"
+description: "Enterprise deployment via Helm chart for multi-replica scale and CD pipelines."
+icon: "ship"
+---
+
+The Protector Plus Kubernetes / Helm form factor is the enterprise deployment for environments that require horizontal scale, CD pipelines, or sovereign on-prem clusters.
+
+<Note>
+  The Helm form factor and the AWS Marketplace AMI share the same detection core. Deployment ergonomics differ; product behaviour and APIs are identical.
+</Note>
+
+## What gets deployed
+
+Protector Plus is delivered as a Helm chart containing the inspection service, the management console, and the supporting infrastructure required for a production deployment. The chart provisions everything needed to expose the Guardrail Service API and the management console over the customer-managed Ingress Controller.
+
+## Sizing
+
+Scale horizontally by adjusting the standard Helm chart configuration values. The chart includes recommended baselines for typical production traffic profiles; sizing for higher-throughput or on-prem GPU-constrained environments is documented in the chart's `values.yaml` reference.
+
+## Network exposure
+
+Two services run within the cluster and are exposed via the customer-managed Ingress Controller:
+
+- The Management Console (HTTPS)
+- The Guardrail Service API (HTTPS)
+
+## Continuous delivery
+
+Updates ship through a CD pipeline so infrastructure changes are defined as code and remain auditable through the customer's change-management process. The Helm chart is version-pinned per release and supports rolling updates without downtime.
+
+## Reach out
+
+The Helm chart is delivered under a commercial engagement. [Contact CloudsineAI](https://www.cloudsine.tech/contact) for the chart bundle and the version-pinned manifest.

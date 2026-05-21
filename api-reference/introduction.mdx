@@ -1,0 +1,56 @@
+---
+title: "API Reference"
+description: "Inspect prompts and responses through Protector Plus over HTTP."
+icon: "code"
+---
+
+The Protector Plus Guardrail Service API exposes two inspection endpoints — one for prompts (`/input-check`) and one for responses (`/output-check`) — plus an unauthenticated health probe.
+
+## Base URL
+
+```
+https://<your-protector-plus-host>
+```
+
+Your `<your-protector-plus-host>` depends on your deployment:
+
+- **AWS Marketplace AMI** — the public IP or DNS of your EC2 instance.
+- **Kubernetes / Helm** — the hostname exposed by your Ingress Controller.
+- **On-prem** — the hostname inside your network.
+
+## Authentication
+
+All API calls require an API key passed in the `X-API-Key` header. See [Authentication](/api-reference/authentication).
+
+## Content type
+
+All endpoints accept `application/json`.
+
+## Endpoints
+
+| Endpoint | Method | Purpose |
+| --- | --- | --- |
+| `/apikey/api/protectorplus/v1/input-check` | POST | Inspect a user prompt before forwarding to the LLM. |
+| `/apikey/api/protectorplus/v1/output-check` | POST | Inspect an LLM response before returning to the user. |
+| `/api/protectorplus/v1/health` | GET | Liveness probe — no authentication. |
+
+## Where to start
+
+<CardGroup cols={2}>
+  <Card title="Authentication" icon="key" href="/api-reference/authentication">
+    Generate and use your API key.
+  </Card>
+  <Card title="Integration pattern" icon="route" href="/api-reference/integration-pattern">
+    Wire `input-check` + `output-check` into your LLM call path.
+  </Card>
+  <Card title="input-check" icon="arrow-right-to-bracket" href="/api-reference/input-check">
+    Prompt inspection.
+  </Card>
+  <Card title="output-check" icon="arrow-right-from-bracket" href="/api-reference/output-check">
+    Response inspection.
+  </Card>
+</CardGroup>
+
+<Card title="Need an API key?" icon="key" href="https://www.cloudsine.tech/contact">
+  Request a sandbox key for evaluation or a deeper technical conversation.
+</Card>

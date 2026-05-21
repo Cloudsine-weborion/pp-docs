@@ -1,0 +1,40 @@
+---
+title: "AWS Marketplace AMI"
+description: "Deploy Protector Plus from the AWS FTR-certified Amazon Machine Image."
+icon: "aws"
+---
+
+The Protector Plus AWS Marketplace AMI is **AWS Foundational Technical Review (FTR)–certified** and ships as the canonical commercial distribution form. Docker-based, single-instance per AMI, and suitable for most production deployments.
+
+<Card title="Subscribe on AWS Marketplace" icon="aws" href="https://aws.amazon.com/marketplace/pp/prodview-wwb66ysepn4he">
+  Open the Protector Plus listing.
+</Card>
+
+## Recommended sizing
+
+| Specification | Value |
+| --- | --- |
+| AWS Instance Type | `g6e.2xlarge` |
+| vCPU | 8 |
+| GPU | NVIDIA L40S, 48 GB |
+| Memory | 64 GB |
+| Storage | 450 GB |
+
+Latency target under load: **≤ 1.5 seconds per message** at the stated concurrency tiers. See [Performance benchmarks](/benchmarks/performance) for per-guardrail numbers.
+
+## Network requirements
+
+| Port | Protocol | Purpose |
+| --- | --- | --- |
+| 22 | SSH | Vendor maintenance (restrict source CIDR). |
+| 443 | HTTPS | Prompt inspection and administrative dashboard. |
+
+## Procurement
+
+For procurement options — including regulated-cloud variants and enterprise licensing — reach out via [contact](https://www.cloudsine.tech/contact).
+
+## Certifications
+
+- AWS Foundational Technical Review (FTR) — certified AMI.
+- ISO/IEC 27001 — operational.
+- CSA Cyber Essentials (Singapore) — operational.

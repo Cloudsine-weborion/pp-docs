@@ -1,0 +1,45 @@
+---
+title: "Overview"
+description: "Runtime AI security for GenAI and agentic AI — production-deployed in Singapore."
+icon: "shield-check"
+---
+
+GenAI Protector Plus is a runtime AI security platform built for production agentic AI workloads in government and regulated enterprise environments. It deploys as an inline runtime defence layer between GenAI applications and their LLM endpoints, inspecting every prompt before it reaches the model and every response before it returns to the application.
+
+## What you get
+
+<CardGroup cols={2}>
+  <Card title="Multi-paradigm runtime defence" icon="layer-group">
+    Three orthogonal detection paradigms in defence-in-depth — rule-based standard guardrails, an LLM classifier, and a vector filter against the proprietary Threat Vector Database (TVDB) — orchestrated by ShieldPrompt.
+  </Card>
+  <Card title="Continuously updated threat intelligence" icon="robot">
+    The Threat Vector Database is maintained continuously by CloudsineAI's research operation — emerging attack variants surface on an ongoing basis, with accelerated releases for high-impact disclosures.
+  </Card>
+  <Card title="LLM-agnostic" icon="arrows-rotate">
+    Works identically across OpenAI, Anthropic, Gemini, open-weight models (Llama, Mistral, AI Singapore SEA-LION), and customer-self-hosted models.
+  </Card>
+  <Card title="Flexible deployment" icon="server">
+    AWS Marketplace (FTR-certified AMI), Kubernetes/Helm enterprise deployment, on-prem air-gapped, hybrid control-plane SaaS + data-plane on-prem.
+  </Card>
+</CardGroup>
+
+## About CloudsineAI
+
+Cloudsine Pte Ltd has operated as a Singapore cybersecurity vendor since 2012. The AWS Marketplace AMI for Protector Plus is AWS Foundational Technical Review (FTR) certified.
+
+## Where to next
+
+<CardGroup cols={2}>
+  <Card title="Key concepts" icon="book" href="/introduction/key-concepts">
+    Understand the building blocks — guardrails, security profiles, deployment modes.
+  </Card>
+  <Card title="Quickstart" icon="rocket" href="/introduction/quickstart">
+    Deploy Protector Plus from AWS Marketplace and validate your first request.
+  </Card>
+  <Card title="Architecture" icon="diagram-project" href="/architecture/system-overview">
+    The full system architecture and the ShieldPrompt pipeline.
+  </Card>
+  <Card title="API Reference" icon="code" href="/api-reference/introduction">
+    Endpoints, request shapes, and per-guardrail behaviour.
+  </Card>
+</CardGroup>

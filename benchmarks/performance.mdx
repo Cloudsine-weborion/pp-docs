@@ -1,0 +1,38 @@
+---
+title: "Performance"
+description: "Latency and throughput on the recommended hardware specification."
+icon: "bolt"
+---
+
+Performance figures are obtained on the CloudsineAI recommended hardware specification. Latency is measured under no-load conditions; throughput is measured under the stated maximum concurrent-user load with the listed prompt sizing.
+
+## Recommended hardware
+
+| Specification | Value |
+| --- | --- |
+| AWS Instance Type | `g6e.2xlarge` |
+| vCPU | 8 |
+| GPU | NVIDIA L40S, 48 GB |
+| Memory | 64 GB |
+| Storage | 450 GB |
+
+## Test profile
+
+| Test profile | Prompt size | Latency SLO |
+| --- | --- | --- |
+| Input-guardrail performance | 115 tokens (~614 characters) | ≤1.5 seconds per message |
+| Output-guardrail performance | 1,150 tokens (~6,140 characters) | ≤1.5 seconds per message |
+
+Per-guardrail latency and throughput tables — including no-load per-message latency, maximum concurrent-user counts at the 1.5-second SLO, and the supporting CSV exports — are available on request as part of the full UAT performance report.
+
+## Sample latencies
+
+Indicative figures from a recent benchmark run (LLM-only configuration against a public prompt-injection corpus):
+
+| Metric | Value |
+| --- | --- |
+| Mean latency | ~1.3 seconds |
+| P95 latency | ~1.5–1.6 seconds |
+| Precision | ~97% |
+
+Exact values vary by configuration (guardrail mix, vector sensitivity) and by dataset.

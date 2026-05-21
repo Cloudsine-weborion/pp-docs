@@ -1,0 +1,52 @@
+---
+title: "System Overview"
+description: "The runtime inspection layer between your GenAI application and the LLM."
+icon: "diagram-project"
+---
+
+Protector Plus deploys as an **inline runtime defence layer** between AI-driven applications and their LLM endpoints. The platform is **LLM-agnostic** — supporting cloud-hosted models (OpenAI, Anthropic, Google Gemini), open-weight models (Llama, Mistral, AI Singapore SEA-LION), and customer-self-hosted models on the same architecture.
+
+## Logical layout
+
+<Frame caption="ShieldPrompt™ protects prompts and responses end-to-end across first- and third-party LLMs; the AI Security Portal manages policy, surfaces analytics, and forwards events to the customer's SIEM.">
+  <img src="/images/diag-shieldprompt.png" alt="Protector Plus + ShieldPrompt architecture" />
+</Frame>
+
+## Two services, both over HTTPS
+
+<CardGroup cols={2}>
+  <Card title="Management Console" icon="gauge">
+    Web UI for tuning security policies, reviewing alerts, generating API keys, and configuring SIEM forwarding.
+  </Card>
+  <Card title="Guardrail Service API" icon="bolt">
+    HTTPS endpoints for prompt inspection (`/input-check`) and response inspection (`/output-check`). Can be called directly by the application or through an LLM gateway.
+  </Card>
+</CardGroup>
+
+## Design principles
+
+<AccordionGroup>
+  <Accordion title="Agentless adoption" icon="plug">
+    No agents on web servers or inside the GenAI application. Integration is HTTP-level — fast, low-friction onboarding without infrastructure changes.
+  </Accordion>
+  <Accordion title="Scalable & trackable deployment" icon="arrows-up-down">
+    Designed for horizontal scaling. In the Kubernetes variant, additional capacity is provisioned through standard Helm chart configuration. Updates ship through CD pipelines — infrastructure as code.
+  </Accordion>
+  <Accordion title="Coverage for emerging threats" icon="shield-virus">
+    The LLM-powered engine catches evasive threats in near-real-time. The Threat Vector Database provides a continuously updated library of malicious prompt patterns without requiring model retraining.
+  </Accordion>
+  <Accordion title="Manageable by multiple custodians" icon="users-gear">
+    Role-based, fine-grained permissions support administration by multiple parties — typically separating the platform Super Admin from per-application owners.
+  </Accordion>
+</AccordionGroup>
+
+## Where to next
+
+<CardGroup cols={2}>
+  <Card title="Deployment modes" icon="route" href="/architecture/deployment-modes">
+    Forwarding and non-forwarding topologies.
+  </Card>
+  <Card title="Detection layers" icon="layer-group" href="/architecture/detection-layers">
+    Standard Guardrails and ShieldPrompt.
+  </Card>
+</CardGroup>

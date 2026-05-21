@@ -1,0 +1,65 @@
+---
+title: "Test Harness & Methodology"
+description: "How CloudsineAI measures Protector Plus accuracy — the eval harness, the corpora, and what each test exercises."
+icon: "clipboard-check"
+---
+
+CloudsineAI publishes accuracy benchmarks measured by the **CloudsineAI evaluation harness** — an internal test runner that loads each evaluation dataset through the Protector Plus inspection API under a documented guardrail configuration, then aggregates true/false positives and negatives at the dataset level. CSV exports of every run are retained for audit.
+
+This page describes the harness and the test corpora at the level appropriate for evaluators. The latest headline numbers live on [Accuracy](/benchmarks/accuracy).
+
+## What the harness does
+
+<Steps>
+  <Step title="Load dataset">
+    The harness reads a labelled evaluation dataset (one prompt per row, with a ground-truth label of `attack` or `benign`).
+  </Step>
+  <Step title="Configure guardrails">
+    Sets the security profile to the documented guardrail mix for the test — e.g., PII-only, or LLM Classifier combined with the TVDB Vector filter at medium sensitivity.
+  </Step>
+  <Step title="Replay through Protector Plus">
+    Issues each row to `/input-check` or `/output-check` over the network, just as a real GenAI application would.
+  </Step>
+  <Step title="Score">
+    Compares Protector Plus verdicts against ground truth, aggregates TP/FP/TN/FN, reports accuracy, precision, recall, and per-row latency.
+  </Step>
+  <Step title="Export">
+    CSV exports retained for audit and replay.
+  </Step>
+</Steps>
+
+## Tests and corpora
+
+### PII detection
+
+**Corpus.** A Singapore-localised PII evaluation set built on a publicly-available balanced PII benchmark. Categories include SG NRIC/FIN, phone number, person, email, credit card.
+
+**Why.** SG NRIC and FIN identifiers are regulated under the Singapore Personal Data Protection Act and are high-priority categories for Singapore Government and regulated-enterprise deployments.
+
+**Configuration.** PII guardrail enabled with the five SG categories above; all other guardrails disabled to isolate PII signal.
+
+### Prompt injection
+
+**Corpus.** A widely-used public prompt-injection benchmark — chosen because it allows direct comparison to other published prompt-injection detectors in the industry.
+
+**Configuration.** Headline result uses the LLM Classifier combined with the TVDB Vector filter at medium sensitivity. CloudsineAI also publishes results for LLM-only and Vector-only configurations on request.
+
+### System-prompt protection
+
+**Corpus.** CloudsineAI's internal system-prompt-leakage evaluation corpus, covering direct extraction, indirect extraction via prompt engineering, and obfuscated leakage via role-play and encoded payloads. Curated by CloudsineAI's research operation.
+
+**Configuration.** System Prompt Protection guardrail enabled (in-line LLM-based detection — no application-side configuration required).
+
+### Content moderation
+
+**Corpus.** Public canonical evaluation corpus for the underlying content-moderation classifier, covering standard hazardous-content categories: violence, hate speech, sexual content, unethical instructions, illegal activity.
+
+**Configuration.** Content Moderation guardrail enabled with the standard malicious-input recommended settings.
+
+## Reproducibility
+
+Each headline number on [Accuracy](/benchmarks/accuracy) is traceable to a specific harness run with a CSV export. Customers and evaluators receive the matching CSV on request — sufficient to replay the benchmark in their own environment.
+
+<Card title="Request a benchmark replay" icon="play" href="https://www.cloudsine.tech/contact">
+  Ask for the CSV exports, harness configuration files, and the recommended hardware profile to reproduce the published numbers locally.
+</Card>

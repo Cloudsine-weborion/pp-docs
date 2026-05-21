@@ -1,0 +1,46 @@
+---
+title: "Detection Layers"
+description: "Standard Guardrails and ShieldPrompt — two complementary layers in defence-in-depth."
+icon: "layer-group"
+---
+
+Protector Plus combines two complementary layers in defence-in-depth: deterministic Standard Guardrails for known patterns, and ShieldPrompt for model-driven detection of evasive and emerging threats.
+
+## Standard Guardrails — rule-based, CPU-powered
+
+Deterministic detection for well-known risk vectors. CPU-only, suitable for high throughput.
+
+| Guardrail | Phase | Description |
+| --- | --- | --- |
+| **Keyword Blocklist** | Input + Output | Exact keyword/phrase blocklist on prompts and outputs. |
+| **Regex Pattern Matching** | Input + Output | Regular-expression filtering against operator-defined patterns. |
+| **PII Detection** | Input + Output | NER-based detection: names, emails, phone numbers, Singapore NRIC/FIN, passport, credit cards, etc. |
+
+## ShieldPrompt — defence-in-depth orchestration, GPU-powered
+
+The orchestration pipeline that combines model-based detection layers.
+
+| Layer | Phase | Role |
+| --- | --- | --- |
+| **LLM Classifier** | Input + Output | LLM-as-judge that scores prompt-injection likelihood and threat intent. |
+| **Vector Filter / TVDB** | Input | Semantic similarity against the proprietary Threat Vector Database. Catches paraphrased and rephrased attacks. |
+| **Content Moderation** | Output | LLM-based classifier for hazardous content (violence, hate, unethical, etc.) in LLM responses. |
+| **System Prompt Protection** | Output | LLM-based detection of system-prompt leakage in LLM responses. |
+
+See [ShieldPrompt](/architecture/shieldprompt) for the deep dive.
+
+## Protection levels
+
+The dashboard offers templated guardrail mixes. Default is **Protection Level 0** (no guardrails); recommended start is **Protection Level 3**.
+
+| Level | What's enabled |
+| --- | --- |
+| **Level 0 — No Protection** | Default. No guardrail enabled. |
+| **Level 1 — Standard Protection** | Standard Protection available; none on by default. |
+| **Level 2 — Standard + ShieldPrompt Preset 1** | Standard available; ShieldPrompt LLM + Vector on by default. |
+| **Level 3 — Standard + ShieldPrompt Preset 2 (Recommended)** | Standard available; LLM + Vector + Content Moderation + System Prompt Protection on by default. |
+| **Full Custom** | Operator-defined mix. |
+
+## Block vs Monitor
+
+Each guardrail (in inline deployments) can operate in **Block** or **Monitor** mode. Block drops the connection on violation; Monitor passes the prompt through but records the detection on the Alerts page.

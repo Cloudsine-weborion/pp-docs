@@ -1,0 +1,46 @@
+---
+title: "Initial Setup"
+description: "First-time provisioning of the Protector Plus appliance and dashboard."
+icon: "screwdriver-wrench"
+---
+
+After deploying the AMI (or installing the Helm chart), Protector Plus requires a one-time provisioning pass before it can accept production traffic.
+
+## 1. Network configuration (AMI only)
+
+In appliance/AMI deployments, the operator assigns an IP address via the console using the bootstrap `kioskuser` account. The `kioskuser` password is provided out-of-band.
+
+<Steps>
+  <Step title="Access the appliance via the physical / virtual console">
+    Log in as `kioskuser`.
+  </Step>
+  <Step title="Configure IP, gateway, DNS, NTP">
+    Use the menu-driven kiosk to set the static network configuration.
+  </Step>
+  <Step title="Reboot">
+    Select the reboot option from the kiosk menu.
+  </Step>
+  <Step title="Verify dashboard access">
+    Navigate to `https://<instance-ip>`. The dashboard administrative password is provided out-of-band.
+  </Step>
+</Steps>
+
+<Note>
+  In Kubernetes/Helm deployments, network ingress is exposed via your Ingress Controller and Helm-chart values control replica counts and resource sizing — there is no kiosk step.
+</Note>
+
+## 2. First admin sign-in
+
+The initial admin authenticates using a **local dashboard account**. After sign-in:
+
+1. Change the admin password (Profile → Security).
+2. Bind Enterprise SSO if available (Profile → Identity Providers). The initial local admin remains as the break-glass entry point.
+3. Configure SIEM forwarding (Settings → SIEM Integration) if you have a log collector.
+
+## 3. Add the first Runtime LLM
+
+Create a Runtime LLM binding for your GenAI application. See [Security profiles](/user-guide/security-profiles) for the workflow and the choice between **Forwarding mode** (FQDN-driven) and **Non-forwarding mode** (key-driven).
+
+## 4. Enable Protection Level 3
+
+Start at [Protection Level 3](/user-guide/protection-levels) — Standard Protection + ShieldPrompt Preset 2. Tune from there once you have baseline alert volume.

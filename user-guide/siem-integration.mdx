@@ -1,0 +1,40 @@
+---
+title: "SIEM Integration"
+description: "Forward alerts and dashboard events to your log collector."
+icon: "bullhorn"
+---
+
+Protector Plus forwards two event classes to your SIEM:
+
+- **Dashboard login activity** — authentication events for the management console.
+- **Security events** — per-request guardrail decisions (Detected and Blocked).
+
+## Supported transport
+
+- **SYSLOG over UDP** — natively supported in the appliance form factor.
+- **Standard log-forwarding patterns** — available in the Kubernetes form factor for broader log-shipping (TCP, TLS, structured forwarding).
+
+## Configure SYSLOG forwarding
+
+<Steps>
+  <Step title="Open SIEM Integration">
+    Left-hand panel → SIEM Integration.
+  </Step>
+  <Step title="Enter the collector address">
+    IP address and UDP port of your log collector.
+  </Step>
+  <Step title="Enable forwarding">
+    Toggle the forwarding switch on.
+  </Step>
+  <Step title="Save">
+    Save the settings.
+  </Step>
+</Steps>
+
+<Note>
+  SIEM-forwarding configuration is restricted to **Super Admin** users.
+</Note>
+
+## Event volume
+
+Per-request guardrail decisions are emitted at request granularity. Tune the SIEM collector's ingestion limits accordingly — under a 1.5-second-per-message latency profile, a `g6e.2xlarge` instance can sustain meaningful traffic volume; size your collector to match.

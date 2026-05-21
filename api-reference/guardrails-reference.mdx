@@ -1,0 +1,32 @@
+---
+title: "Guardrails Reference"
+description: "All guardrails surfaced by the inspection APIs."
+icon: "list-check"
+---
+
+The table below documents every guardrail surfaced by `input-check` and `output-check`, the engine class behind it, and the phase(s) in which it operates.
+
+| Guardrail | Phase | Engine | Description |
+| --- | --- | --- | --- |
+| **LLM** | Input + Output | LLM-as-judge | Scores prompt-injection likelihood 0–1 using a model-based judge. |
+| **Keyword** | Input + Output | Rule-based | Exact keyword/phrase blocklist match. |
+| **Regex** | Input + Output | Rule-based | Regex pattern match against operator-configured patterns. |
+| **PII Detection** | Input + Output | NER model | Detects names, emails, phone numbers, NRIC/passport, credit cards, etc. |
+| **Vector** | Input | Semantic similarity over TVDB | Similarity search against the proprietary Threat Vector Database. Catches paraphrased injection. |
+| **Content Moderation** | Input + Output | Purpose-built classifier | Classifies harmful content (violence, hate speech, unethical, etc.). |
+| **System Prompt Protection** | Output | In-line detection | Detects when the LLM is leaking its system prompt in its response. |
+
+## When each guardrail fires
+
+`injection_detected` is `true` in the API response if **any active** guardrail flags the input or output. Use the per-guardrail block within `checks` to identify which layer produced the decision and tune accordingly.
+
+## Configuring sensitivity
+
+| Guardrail | Tunable |
+| --- | --- |
+| LLM | Threshold (per security profile) |
+| Vector | Sensitivity (Low / Medium / High) |
+| Content Moderation | Category-level enable/disable |
+| System Prompt Protection | Automatic in Forwarding mode (no application-side configuration required) |
+| Keyword / Regex | Operator-defined rule sets |
+| PII | Per-category toggles (NRIC/FIN, Phone, Email, Person, Credit Card, etc.) |

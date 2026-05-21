@@ -1,0 +1,99 @@
+---
+title: "Security Profiles"
+description: "Bind GenAI applications to packaged guardrail configurations."
+icon: "shield-halved"
+---
+
+A **security profile** is a packaged set of guardrail configurations that Protector Plus applies when evaluating prompts and responses. Each GenAI application is bound to a security profile — multiple applications can share a profile, or each can have its own.
+
+<Frame caption="The Security Profiles management view. Each profile carries a guardrail mix and binds to one or more applications.">
+  <img src="/images/dash-security-profiles.png" alt="Security profiles dashboard" />
+</Frame>
+
+## Create a profile
+
+<Steps>
+  <Step title="Dashboard → Runtime LLM → Add Runtime LLM">
+    Start the binding workflow.
+  </Step>
+  <Step title="Choose Forwarding mode or Non-forwarding mode">
+    See sections below.
+  </Step>
+  <Step title="Fill the Secure Proxy Settings">
+    Inputs depend on mode (see tables below).
+  </Step>
+  <Step title="Save">
+    Protector Plus registers the binding and the profile becomes active.
+  </Step>
+</Steps>
+
+## Forwarding mode
+
+The GenAI application points its LLM endpoint at the Protector Plus FQDN. Protector Plus applies the security profile bound to the FQDN before forwarding to the origin LLM.
+
+| Setting | Description |
+| --- | --- |
+| Runtime LLM URL | Valid FQDN unique to the GenAI application. Must resolve to Protector Plus. |
+| Origin Server IP | IP address of the LLM endpoint. |
+| Origin Protocol | Protocol type of the LLM endpoint (HTTP / HTTPS). |
+| Origin Protocol TCP port | Port number of the LLM endpoint. |
+| LLM Block Message | Message returned to the GenAI app on harmful-prompt detection. |
+
+<Tip>
+  Assign one **FQDN per GenAI application** — this is how Protector Plus distinguishes which security profile to apply.
+</Tip>
+
+## Non-forwarding mode
+
+The application calls Protector Plus directly with an API key. No FQDN is required. The application makes the final allow/deny decision based on the risk score returned by Protector Plus.
+
+| Setting | Description |
+| --- | --- |
+| Runtime LLM URL | Pseudo-URL (e.g., `appname.pseudo-domain.local`). |
+| Origin Server IP | `127.0.0.1` |
+| Origin Protocol | HTTP |
+| Origin Protocol TCP port | 80 |
+| LLM Block Message | `default` |
+
+After saving the profile, generate the API key from Overview → Gear icon → **Download API Key**.
+
+<Warning>
+  The API key is shown **once** at generation. Store it securely. If lost, generate a new one.
+</Warning>
+
+## Per-application isolation in practice
+
+The diagram below shows two GenAI applications bound to two separate security profiles on the same Protector Plus instance. Each application is routed via a unique FQDN; Protector Plus applies the bound profile before forwarding to the corresponding LLM endpoint.
+
+<Frame caption="Per-application security profiles in Forwarding mode.">
+  <img src="/images/diag-deployment.png" alt="Per-application profiles" />
+</Frame>
+
+Use per-application isolation to:
+
+<CardGroup cols={2}>
+  <Card title="Tighten regulated apps" icon="shield">
+    Apply stricter PII rules to customer-facing applications handling SG NRIC/FIN.
+  </Card>
+  <Card title="Per-domain thresholds" icon="sliders">
+    Tune prompt-injection thresholds higher for apps wired to sensitive tools.
+  </Card>
+  <Card title="Sandbox isolation" icon="flask">
+    Run research apps at Level 1–2 in Monitor mode without blocking.
+  </Card>
+  <Card title="Multi-tenant control" icon="layer-group">
+    Assign different profiles per tenant in shared-platform deployments.
+  </Card>
+</CardGroup>
+
+## Switching between profiles
+
+The dashboard view is scoped to the currently selected profile. To view alerts and guardrail settings for a different profile, navigate to **Overview** and click **Select this Runtime LLM** beneath the LLM you wish to manage.
+
+## Removing a profile
+
+Navigate to **Overview** and click **Delete** under the LLM. Bindings and alert history for that profile are removed; in-flight traffic falls back to the default profile until a new binding is created.
+
+## Profile administration is Super-Admin only
+
+Application-to-security-profile binding is restricted to Super Admin users. App-bound users cannot modify the binding of their own application — see [Account Management](/user-guide/account-management) for the full access matrix.
