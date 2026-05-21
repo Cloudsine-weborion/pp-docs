@@ -12,9 +12,25 @@ The gateway component shown in the diagrams below is a reference LLM gateway —
 
 The GenAI application sends prompts to an LLM gateway, which forwards them concurrently to the LLM and to the GenAI Firewall for evaluation. The firewall returns findings alongside the LLM response; the application interprets findings and decides whether to allow, suppress, log, or alert.
 
-<Frame caption="Gateway-first deployment. Findings are returned to the application alongside the LLM response.">
-  <img src="/images/mode-1.png" alt="Gateway-first deployment" />
-</Frame>
+```mermaid
+flowchart LR
+    App([Application])
+    GW[LLM Gateway]
+    FW[GenAI Firewall]
+    LLM[(LLM)]
+
+    App -->|prompt| GW
+    GW -->|prompt| LLM
+    GW -.->|prompt| FW
+    LLM -->|response| GW
+    FW -.->|findings| GW
+    GW -->|response + findings| App
+
+    classDef product fill:#1F3864,stroke:#0F1E3A,color:#fff
+    classDef external fill:#E6F4FA,stroke:#00B5E2,color:#0F1E3A
+    class FW product
+    class App,GW,LLM external
+```
 
 <Info>
   Non-blocking by design — the application retains the final allow/deny decision.
@@ -24,9 +40,29 @@ The GenAI application sends prompts to an LLM gateway, which forwards them concu
 
 The GenAI Firewall sits inline as an enforcing gate. Prompts that pass policy checks are forwarded to the gateway and on to the LLM; violating prompts are blocked and never reach the model.
 
-<Frame caption="Forwarding mode. Violating prompts never reach the LLM.">
-  <img src="/images/mode-2a.png" alt="Forwarding mode deployment" />
-</Frame>
+```mermaid
+flowchart LR
+    App([Application])
+    FW{GenAI Firewall}
+    GW[LLM Gateway]
+    LLM[(LLM)]
+    Block[/Blocked/]
+
+    App -->|prompt| FW
+    FW -->|pass| GW
+    FW -->|violate| Block
+    GW -->|prompt| LLM
+    LLM -->|response| GW
+    GW -->|response| FW
+    FW -->|response| App
+
+    classDef product fill:#1F3864,stroke:#0F1E3A,color:#fff
+    classDef external fill:#E6F4FA,stroke:#00B5E2,color:#0F1E3A
+    classDef block fill:#FBE9E7,stroke:#C62828,color:#7F1D1D
+    class FW product
+    class App,GW,LLM external
+    class Block block
+```
 
 <Tip>
   Forwarding mode is the recommended topology for production deployments under strict policy enforcement.
@@ -36,9 +72,25 @@ The GenAI Firewall sits inline as an enforcing gate. Prompts that pass policy ch
 
 The firewall receives the prompt first and evaluates it, but does not forward to the LLM. It returns a risk score to the application; the application makes the final allow/deny decision and, if proceeding, calls the LLM directly through its own gateway.
 
-<Frame caption="Non-forwarding mode. Policy evaluation stays inline; allow/deny authority stays with the application.">
-  <img src="/images/mode-2b.png" alt="Non-forwarding mode deployment" />
-</Frame>
+```mermaid
+flowchart LR
+    App([Application])
+    FW[GenAI Firewall]
+    GW[LLM Gateway]
+    LLM[(LLM)]
+
+    App -->|1. prompt| FW
+    FW -->|2. risk score| App
+    App -->|3. if allowed| GW
+    GW -->|prompt| LLM
+    LLM -->|response| GW
+    GW -->|response| App
+
+    classDef product fill:#1F3864,stroke:#0F1E3A,color:#fff
+    classDef external fill:#E6F4FA,stroke:#00B5E2,color:#0F1E3A
+    class FW product
+    class App,GW,LLM external
+```
 
 ## Decision matrix
 
