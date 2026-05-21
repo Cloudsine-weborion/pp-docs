@@ -53,12 +53,6 @@ api: "POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/input-
     "vector": {
       "enabled": false,
       "score": null
-    },
-    "content_moderation": {
-      "enabled": false,
-      "score": null,
-      "category": null,
-      "threshold": null
     }
   }
 }
@@ -74,7 +68,6 @@ api: "POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/input-
 | `checks.regex.matched` | List of matched regex patterns. |
 | `checks.pii.entities` | List of detected PII entity types. |
 | `checks.vector.score` | Cosine similarity to known injection embeddings. |
-| `checks.content_moderation` | Category and verdict if content moderation is enabled. |
 
 ## Examples
 
