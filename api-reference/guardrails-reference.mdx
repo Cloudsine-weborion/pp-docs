@@ -13,7 +13,7 @@ The table below documents every guardrail surfaced by `input-check` and `output-
 | **Regex** | Input + Output | Rule-based | Regex pattern match against operator-configured patterns. |
 | **PII Detection** | Input + Output | NER model | Detects names, emails, phone numbers, NRIC/passport, credit cards, etc. |
 | **Vector** | Input | Semantic similarity over TVDB | Similarity search against the proprietary Threat Vector Database. Catches paraphrased injection. |
-| **Content Moderation** | Input + Output | Purpose-built classifier | Classifies harmful content (violence, hate speech, unethical, etc.). |
+| **Content Moderation** | Output | Purpose-built classifier | Classifies harmful content (violence, hate speech, unethical, etc.). |
 | **System Prompt Protection** | Output | In-line detection | Detects when the LLM is leaking its system prompt in its response. |
 
 ## When each guardrail fires
