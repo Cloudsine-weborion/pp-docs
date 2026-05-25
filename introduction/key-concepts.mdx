@@ -27,7 +27,7 @@ Protector Plus combines two complementary layers in defence-in-depth: determinis
 A **security profile** is a packaged set of policy configurations. Each GenAI application is bound to a security profile, which determines which guardrails are enabled, in what mode (block or monitor), and with what thresholds.
 
 <Tip>
-  Start at **Protection Level 3** (Standard Protection + ShieldPrompt Preset 2). It enables the LLM, Vector, Content Moderation, and System Prompt Protection guardrails by default. Tune from there.
+  A recommended starting configuration is to enable the LLM, Vector, Content Moderation, and System Prompt Protection guardrails. Tune from there based on your requirements.
 </Tip>
 
 ## Deployment modes
@@ -56,4 +56,3 @@ The TVDB is maintained on a continuous basis by CloudsineAI's research operation
 | **ShieldPrompt** | The defence-in-depth orchestration pipeline (LLM + Vector + Content Moderation + System-Prompt Protection). |
 | **TVDB** | Threat Vector Database — CloudsineAI's proprietary attack-pattern corpus. |
 | **Security profile** | A packaged guardrail configuration bound to a GenAI application. |
-| **Protection level** | A templated guardrail preset (Level 0–3 or Full Custom). |
