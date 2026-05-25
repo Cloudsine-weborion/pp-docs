@@ -13,17 +13,17 @@ A **security profile** is a packaged set of guardrail configurations that Protec
 ## Create a profile
 
 <Steps>
-  <Step title="Dashboard → Runtime LLM → Add Runtime LLM">
-    Start the binding workflow.
+  <Step title="Navigate to Security Profiles">
+    Dashboard → **Security Profiles** → **Create Security Profile**.
   </Step>
   <Step title="Choose Forwarding mode or Non-forwarding mode">
-    See sections below.
+    See sections below for mode details.
   </Step>
-  <Step title="Fill the Secure Proxy Settings">
-    Inputs depend on mode (see tables below).
+  <Step title="Configure profile settings">
+    Fill in the profile name, LLM backend settings, and deployment mode settings (see tables below).
   </Step>
   <Step title="Save">
-    Protector Plus registers the binding and the profile becomes active.
+    The security profile is created and ready to be bound to applications.
   </Step>
 </Steps>
 
@@ -33,7 +33,8 @@ The GenAI application points its LLM endpoint at the Protector Plus FQDN. Protec
 
 | Setting | Description |
 | --- | --- |
-| Runtime LLM URL | Valid FQDN unique to the GenAI application. Must resolve to Protector Plus. |
+| Profile Name | Unique name for this security profile. |
+| LLM Endpoint FQDN | Valid FQDN unique to the GenAI application. Must resolve to Protector Plus. |
 | Origin Server IP | IP address of the LLM endpoint. |
 | Origin Protocol | Protocol type of the LLM endpoint (HTTP / HTTPS). |
 | Origin Protocol TCP port | Port number of the LLM endpoint. |
@@ -49,7 +50,8 @@ The application calls Protector Plus directly using an org-wide API key and App 
 
 | Setting | Description |
 | --- | --- |
-| Runtime LLM URL | Pseudo-URL (e.g., `appname.pseudo-domain.local`). |
+| Profile Name | Unique name for this security profile. |
+| Pseudo-URL | Internal identifier (e.g., `appname.pseudo-domain.local`). Not a resolvable DNS name. |
 | Origin Server IP | `127.0.0.1` |
 | Origin Protocol | HTTP |
 | Origin Protocol TCP port | 80 |
@@ -98,21 +100,41 @@ Use per-application isolation to:
     Tune prompt-injection thresholds higher for apps wired to sensitive tools.
   </Card>
   <Card title="Sandbox isolation" icon="flask">
-    Run research apps at Level 1–2 in Monitor mode without blocking.
+    Run research apps with minimal guardrails in Monitor mode without blocking.
   </Card>
   <Card title="Multi-tenant control" icon="layer-group">
     Assign different profiles per tenant in shared-platform deployments.
   </Card>
 </CardGroup>
 
-## Switching between profiles
+## Managing profiles
 
-The dashboard view is scoped to the currently selected profile. To view alerts and guardrail settings for a different profile, navigate to **Overview** and click **Select this Runtime LLM** beneath the LLM you wish to manage.
+### Viewing profile details
 
-## Removing a profile
+Navigate to **Security Profiles** in the dashboard sidebar to view all profiles. Click on a profile to view and configure its guardrail settings.
 
-Navigate to **Overview** and click **Delete** under the LLM. Bindings and alert history for that profile are removed; in-flight traffic falls back to the default profile until a new binding is created.
+### Editing a profile
+
+1. Navigate to **Security Profiles**
+2. Click on the profile you want to edit
+3. Modify guardrail settings, thresholds, or backend configurations
+4. Click **Save** to apply changes
+
+### Viewing apps using a profile
+
+On the Security Profile detail page, you can see which applications are currently bound to that profile.
+
+### Removing a profile
+
+1. Navigate to **Security Profiles**
+2. Click on the profile you want to remove
+3. Click **Delete**
+4. Confirm deletion
+
+<Warning>
+  You cannot delete a profile that has active applications bound to it. Unbind all apps first, then delete the profile.
+</Warning>
 
 ## Profile administration is Super-Admin only
 
-Application-to-security-profile binding is restricted to Super Admin users. App-bound users cannot modify the binding of their own application — see [Account Management](/user-guide/account-management) for the full access matrix.
+Security profile creation and deletion is restricted to Super Admin users. App-bound users cannot modify security profiles — see [Account Management](/user-guide/account-management) for the full access matrix.

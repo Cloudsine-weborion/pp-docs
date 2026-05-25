@@ -37,9 +37,9 @@ The initial admin authenticates using a **local dashboard account**. After sign-
 2. Bind Enterprise SSO if available (Profile → Identity Providers). The initial local admin remains as the break-glass entry point.
 3. Configure SIEM forwarding (Settings → SIEM Integration) if you have a log collector.
 
-## 3. Add the first Runtime LLM (Security Profile)
+## 3. Create the first security profile
 
-Create a Runtime LLM binding for your GenAI application. See [Security profiles](/user-guide/security-profiles) for the workflow and the choice between **Forwarding mode** (FQDN-driven) and **Non-forwarding mode** (key-driven).
+Create a security profile for your GenAI application. See [Security profiles](/user-guide/security-profiles) for the workflow and the choice between **Forwarding mode** (FQDN-driven) and **Non-forwarding mode** (key-driven).
 
 ## 4. Set up authentication
 
@@ -57,7 +57,7 @@ Create a Runtime LLM binding for your GenAI application. See [Security profiles]
     Fill in:
     - **App Name**: Human-readable name for your GenAI application
     - **App ID**: Unique identifier (e.g., `my-chatbot`, `hr-assistant`)
-    - **Security Profile**: Select the security profile (Runtime LLM) you created in Step 3
+    - **Security Profile**: Select the security profile you created in Step 3
 
     Save and note your App ID for use in API calls.
   </Step>
