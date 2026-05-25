@@ -45,7 +45,7 @@ The GenAI application points its LLM endpoint at the Protector Plus FQDN. Protec
 
 ## Non-forwarding mode
 
-The application calls Protector Plus directly with an API key. No FQDN is required. The application makes the final allow/deny decision based on the risk score returned by Protector Plus.
+The application calls Protector Plus directly using an org-wide API key and App ID. No FQDN is required. The application makes the final allow/deny decision based on the risk score returned by Protector Plus.
 
 | Setting | Description |
 | --- | --- |
@@ -55,11 +55,30 @@ The application calls Protector Plus directly with an API key. No FQDN is requir
 | Origin Protocol TCP port | 80 |
 | LLM Block Message | `default` |
 
-After saving the profile, generate the API key from Overview → Gear icon → **Download API Key**.
+### Setting up authentication for Non-forwarding mode
 
-<Warning>
-  The API key is shown **once** at generation. Store it securely. If lost, generate a new one.
-</Warning>
+<Steps>
+  <Step title="Generate the org-wide API key">
+    Navigate to **Org Settings** → Click **Generate** to create your organization-wide API key. Store it securely — it is shown only once.
+  </Step>
+  <Step title="Register your application">
+    Navigate to **Apps** → **Register App**.
+
+    Fill in:
+    - **App Name**: Human-readable name (e.g., "Customer Support Bot")
+    - **App ID**: Unique identifier (e.g., `support-bot`)
+    - **Security Profile**: Select the security profile you created
+
+    Save and note your App ID.
+  </Step>
+  <Step title="Use both credentials in API calls">
+    Include both `X-API-Key` (org-wide key) and `X-App-ID` (your app's ID) in all API requests. See [Authentication](/api-reference/authentication) for details.
+  </Step>
+</Steps>
+
+<Tip>
+  Multiple applications can share the same security profile. Simply register additional apps and bind them to the same profile.
+</Tip>
 
 ## Per-application isolation in practice
 

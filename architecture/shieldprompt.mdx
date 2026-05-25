@@ -26,14 +26,14 @@ An LLM-as-judge classifier that scores prompt-injection likelihood and threat in
 ```bash Blocked example
 # Should be BLOCKED (high score)
 curl -X POST https://<host>/apikey/api/protectorplus/v1/input-check \
-  -H 'X-API-Key: <YOUR_API_KEY>' -H 'Content-Type: application/json' \
+  -H 'X-API-Key: <YOUR_API_KEY>' -H 'X-App-ID: <YOUR_APP_ID>' -H 'Content-Type: application/json' \
   -d '{"message": "<a prompt-injection attempt>"}'
 ```
 
 ```bash Allowed example
 # Should be ALLOWED
 curl -X POST https://<host>/apikey/api/protectorplus/v1/input-check \
-  -H 'X-API-Key: <YOUR_API_KEY>' -H 'Content-Type: application/json' \
+  -H 'X-API-Key: <YOUR_API_KEY>' -H 'X-App-ID: <YOUR_APP_ID>' -H 'Content-Type: application/json' \
   -d '{"message": "What is the capital of France?"}'
 ```
 </CodeGroup>

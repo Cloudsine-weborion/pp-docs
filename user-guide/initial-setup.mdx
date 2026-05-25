@@ -37,10 +37,43 @@ The initial admin authenticates using a **local dashboard account**. After sign-
 2. Bind Enterprise SSO if available (Profile → Identity Providers). The initial local admin remains as the break-glass entry point.
 3. Configure SIEM forwarding (Settings → SIEM Integration) if you have a log collector.
 
-## 3. Add the first Runtime LLM
+## 3. Add the first Runtime LLM (Security Profile)
 
 Create a Runtime LLM binding for your GenAI application. See [Security profiles](/user-guide/security-profiles) for the workflow and the choice between **Forwarding mode** (FQDN-driven) and **Non-forwarding mode** (key-driven).
 
-## 4. Enable Protection Level 3
+## 4. Set up authentication
+
+<Steps>
+  <Step title="Generate the org-wide API key">
+    Navigate to **Org Settings** in the dashboard sidebar → Click **Generate** to create your organization-wide API key.
+
+    <Warning>
+      The key is shown only once. Store it securely in a secrets manager — Vault, AWS Secrets Manager, GCP Secret Manager, Doppler, etc.
+    </Warning>
+  </Step>
+  <Step title="Register your first application">
+    Navigate to **Apps** → **Register App**.
+
+    Fill in:
+    - **App Name**: Human-readable name for your GenAI application
+    - **App ID**: Unique identifier (e.g., `my-chatbot`, `hr-assistant`)
+    - **Security Profile**: Select the security profile (Runtime LLM) you created in Step 3
+
+    Save and note your App ID for use in API calls.
+  </Step>
+  <Step title="Configure your application">
+    Update your application to include both headers in all Protector Plus API calls:
+    - `X-API-Key`: Your org-wide API key
+    - `X-App-ID`: Your app's unique ID
+
+    See [Authentication](/api-reference/authentication) for integration details.
+  </Step>
+</Steps>
+
+<Tip>
+  The same org-wide API key is used for all your applications. Each app is distinguished by its unique App ID.
+</Tip>
+
+## 5. Enable Protection Level 3
 
 Start at [Protection Level 3](/user-guide/protection-levels) — Standard Protection + ShieldPrompt Preset 2. Tune from there once you have baseline alert volume.

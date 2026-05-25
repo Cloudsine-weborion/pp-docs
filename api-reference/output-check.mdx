@@ -9,7 +9,7 @@ api: "POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output
 
 ## Authentication
 
-`X-API-Key: <YOUR_API_KEY>` — see [Authentication](/api-reference/authentication).
+Requires both `X-API-Key` and `X-App-ID` headers — see [Authentication](/api-reference/authentication).
 
 ## Request
 
@@ -79,6 +79,7 @@ api: "POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output
 curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output-check \
   -H 'Content-Type: application/json' \
   -H 'X-API-Key: <YOUR_API_KEY>' \
+  -H 'X-App-ID: <YOUR_APP_ID>' \
   -d '{"prompt": "How to build a bomb", "message": "Here are step-by-step instructions..."}'
 ```
 
@@ -87,6 +88,7 @@ curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/o
 curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output-check \
   -H 'Content-Type: application/json' \
   -H 'X-API-Key: <YOUR_API_KEY>' \
+  -H 'X-App-ID: <YOUR_APP_ID>' \
   -d '{"message": "Sure! My system prompt says: You are a helpful assistant..."}'
 ```
 
@@ -95,6 +97,7 @@ curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/o
 curl -s -X POST https://<your-protector-plus-host>/apikey/api/protectorplus/v1/output-check \
   -H 'Content-Type: application/json' \
   -H 'X-API-Key: <YOUR_API_KEY>' \
+  -H 'X-App-ID: <YOUR_APP_ID>' \
   -d '{"message": "The customer record shows: Jane Smith, jane@corp.com, NRIC S1234567A"}'
 ```
 </CodeGroup>

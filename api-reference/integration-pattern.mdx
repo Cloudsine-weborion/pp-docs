@@ -27,7 +27,8 @@ import requests
 
 BASE_URL = "https://<your-protector-plus-host>"
 API_KEY  = "<YOUR_API_KEY>"
-HEADERS  = {"Content-Type": "application/json", "X-API-Key": API_KEY}
+APP_ID   = "<YOUR_APP_ID>"
+HEADERS  = {"Content-Type": "application/json", "X-API-Key": API_KEY, "X-App-ID": APP_ID}
 
 def check_input(message: str) -> bool:
     """Returns True if safe, False if blocked."""
@@ -66,11 +67,12 @@ else:
 ```typescript
 const BASE_URL = "https://<your-protector-plus-host>";
 const API_KEY  = process.env.PROTECTOR_PLUS_API_KEY!;
+const APP_ID   = process.env.PROTECTOR_PLUS_APP_ID!;
 
 async function check(endpoint: string, body: Record<string, unknown>) {
   const res = await fetch(`${BASE_URL}/apikey/api/protectorplus/v1/${endpoint}`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "X-API-Key": API_KEY },
+    headers: { "Content-Type": "application/json", "X-API-Key": API_KEY, "X-App-ID": APP_ID },
     body: JSON.stringify(body),
   });
   return (await res.json()) as { injection_detected: boolean };
