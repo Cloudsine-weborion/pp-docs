@@ -83,9 +83,18 @@ Replace the placeholders in the commands below:
 - `<YOUR_API_KEY>` - The org-wide API key from Step 3
 - `<YOUR_APP_ID>` - The App ID from Step 4
 
+<Note>
+**Important:** For the blocked examples to work correctly, ensure these guardrails are enabled in your security profile:
+- **LLM Guardrail** and **Vector Guardrail** must be ON for input-check (Blocked) to detect prompt injection
+- **System Prompt Protection** must be ON for output-check (Blocked) to detect system prompt leakage
+
+You can toggle these in: Security Profile → Guardrails settings
+</Note>
+
 <CodeGroup>
 ```bash input-check (Blocked)
 # This prompt should be BLOCKED (prompt injection detected)
+# Requires: LLM Guardrail + Vector Guardrail enabled
 curl -s -X POST https://<DASHBOARD_URL>/apikey/api/protectorplus/v1/input-check \
   -H 'Content-Type: application/json' \
   -H 'X-API-Key: <YOUR_API_KEY>' \
@@ -104,6 +113,7 @@ curl -s -X POST https://<DASHBOARD_URL>/apikey/api/protectorplus/v1/input-check 
 
 ```bash output-check (Blocked)
 # This output should be BLOCKED (system prompt leakage)
+# Requires: System Prompt Protection enabled
 curl -s -X POST https://<DASHBOARD_URL>/apikey/api/protectorplus/v1/output-check \
   -H 'Content-Type: application/json' \
   -H 'X-API-Key: <YOUR_API_KEY>' \
