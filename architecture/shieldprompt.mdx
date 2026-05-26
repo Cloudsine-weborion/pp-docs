@@ -64,10 +64,6 @@ The response includes a category label when content is unsafe:
 
 LLM-based detection of system-prompt leakage in LLM responses. No application-side configuration is required.
 
-<Warning>
-  System Prompt Protection runs in **Forwarding mode** only.
-</Warning>
-
 ## Why four layers, not one
 
 Each layer catches what the others miss. A classifier alone misses semantically novel attacks; vector similarity alone misses entirely new attack classes; content moderation alone misses the prompt-injection vector; system-prompt protection alone misses everything that doesn't leak the prompt. Run together, the layers compose into defence-in-depth.
